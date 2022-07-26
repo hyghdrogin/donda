@@ -6,5 +6,8 @@
         "javascript"
     ],
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "cSpell.words": [
+        "MAILTRAP"
+    ]
 }
