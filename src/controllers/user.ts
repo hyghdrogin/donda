@@ -4,6 +4,7 @@ import models from "../models";
 import { successResponse, errorResponse } from "../utils/responses";
 import jwtHelper from "../utils/jwt";
 import { IUser } from "../utils/interface";
+import sendEmail from "../utils/email"
 
 const { generateToken } = jwtHelper;
 /**
@@ -33,6 +34,9 @@ export default class UserController {
     await models.User.create({
       firstName, lastName, email, password: hashedPassword, phone
     });
+    const subject = "User created";
+    const message = "hi, thank you for signing up"
+    await sendEmail( email,    subject,   message)
     return successResponse(
       res, 201, "Account created successfully, kindly login."
     );
@@ -59,6 +63,25 @@ export default class UserController {
       200,
       "User Logged in Successfully.",
       {token, userDetails}
+    );
+  }
+  
+  /**
+   * @param {object} req - The reset request object
+   * @param {object} res - The reset errorResponse object
+   * @returns {object} Success message
+   */
+  static async updateProfile(req: Request, res: Response) {
+    const { _id } = req.user;
+    const { firstName, lastName } = req.body;
+    const user: IUser | null = await models.User.findByIdAndUpdate(
+      { _id }, { firstName, lastName }, { new: true }
+    ).select("-password");
+    return successResponse(
+      res,
+      200,
+      "Profile updated Successfully.",
+      user
     );
   }
 

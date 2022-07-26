@@ -20,6 +20,7 @@ export const validateLogin = (login: ILogin) => {
   });
   return schema.validate(login);
 };
+
 export const validateProfile = (user: IUser) => {
   const schema = Joi.object({
     firstName: Joi.string().min(2).max(20),

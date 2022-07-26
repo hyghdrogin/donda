@@ -13,6 +13,9 @@ const config = {
   CLOUD_NAME: process.env.CLOUD_NAME,
   API_KEY: process.env.API_KEY,
   API_SECRET: process.env.API_SECRET,
+  MAILTRAP_USER: process.env.MAILTRAP_USER,
+  MAILTRAP_PASS: process.env.MAILTRAP_PASS,
+  SMTP_EMAIL: process.env.SMTP_EMAIL,
 };
 
 const absentConfig = Object.entries(config)
