@@ -5,8 +5,10 @@ import { successResponse, errorResponse } from "../utils/responses";
 import jwtHelper from "../utils/jwt";
 import { IUser } from "../utils/interface";
 import sendEmail from "../utils/email"
+// import sendgrid from "../utils/email"
 
 const { generateToken } = jwtHelper;
+// const {sendEmail} = sendgrid
 /**
  * @class UserController
  * @description create, log in user
@@ -36,7 +38,7 @@ export default class UserController {
     });
     const subject = "User created";
     const message = "hi, thank you for signing up"
-    await sendEmail( email,    subject,   message)
+    await sendEmail(email, subject, message)
     return successResponse(
       res, 201, "Account created successfully, kindly login."
     );

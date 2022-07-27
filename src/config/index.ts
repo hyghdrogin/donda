@@ -16,6 +16,8 @@ const config = {
   MAILTRAP_USER: process.env.MAILTRAP_USER,
   MAILTRAP_PASS: process.env.MAILTRAP_PASS,
   SMTP_EMAIL: process.env.SMTP_EMAIL,
+  SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
+  SENDGRID_EMAIL: process.env.SENDGRID_EMAIL,
 };
 
 const absentConfig = Object.entries(config)
