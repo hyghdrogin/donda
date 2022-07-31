@@ -31,11 +31,10 @@ export interface IOtp {
   updatedAt?: Date        
 }
 
-export interface ICart {
+export interface IComment {
    _id?: string        
-  user?: string        
-  products?: string[]
-  quantity?: number
+  owner: string        
+  comment: string
   createdAt?: Date     
   updatedAt?: Date        
 }
@@ -45,12 +44,22 @@ export interface ILogin {
   password: string      
 }
 
-export interface IProductQuery {
-  jobTitle: string;
-  yearOfExperience: string;
-  experienceLevel: string;
-  employmentType: string;
-  workStructure: string;
+export interface IPost {
+  _id: string;
+  owner: string;
+  post: string;
+  likes: number;
+  comment: number;
+  location: string;
+  createdAt?: Date     
+  updatedAt?: Date  
+}
+export interface IPostQuery {
+  _id: string;
+  owner: string;
+  post: string;
+  likes: number;
+  comment: number;
   location: string;
   $text: Search;
 }
