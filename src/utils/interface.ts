@@ -17,15 +17,16 @@ export interface IUser {
   phone?: string
   photo?: string
   role?: string
+  verified: boolean
   createdAt?: Date     
   updatedAt?: Date        
 }
 
-export interface IProduct {
+export interface IOtp {
   _id?: string        
-  name: string        
-  price: number
-  quantity?: number
+  email: string        
+  token: number
+  expired: boolean
   createdAt?: Date     
   updatedAt?: Date        
 }

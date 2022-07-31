@@ -28,3 +28,17 @@ export const validateProfile = (user: IUser) => {
   });
   return schema.validate(user);
 };
+
+export const validateEmail = (user: IUser) => {
+  const schema = Joi.object({
+    email: Joi.string().email().required(),
+  });
+  return schema.validate(user);
+};
+
+export const validateAccount = (user: IUser) => {
+  const schema = Joi.object({
+    token: Joi.number().required(),
+  });
+  return schema.validate(user);
+};
