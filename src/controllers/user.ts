@@ -109,6 +109,25 @@ export default class UserController {
    * @param {object} res - The reset errorResponse object
    * @returns {object} Success message
    */
+  static async uploadProfilePicture(req: Request, res: Response) {
+    try {
+    const { _id } = req.user;
+      const user = await models.User.findByIdAndUpdate(_id,
+        { photo: req.file?.path },
+        { new: true }
+      ).select("-password");
+    
+    return successResponse( res, 200, "Picture uploaded Successfully.", user );
+    } catch (error) {
+      return errorResponse(res, 500, "Server error")
+    }
+  }
+  
+  /**
+   * @param {object} req - The reset request object
+   * @param {object} res - The reset errorResponse object
+   * @returns {object} Success message
+   */
   static async resendOtp(req: Request, res: Response) {
     try{const { email } = req.body;
     const user: IUser | null = await models.User.findOne({ email });
