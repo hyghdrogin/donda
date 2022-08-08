@@ -1,14 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import bcrypt from "bcrypt";
 import models from "../models";
-import { successResponse, errorResponse } from "../utils/responses";
+import { successResponse, errorResponse, handleError } from "../utils/responses";
 import jwtHelper from "../utils/jwt";
 import { IUser, IOtp } from "../utils/interface";
 import sendEmail from "../utils/email"
-// import sendgrid from "../utils/email"
 
 const { generateToken } = jwtHelper;
-// const {sendEmail} = sendgrid
 /**
  * @class UserController
  * @description create, log in user
@@ -46,6 +44,7 @@ export default class UserController {
         res, 201, "Account created successfully, kindly login."
       );
     } catch (error) {
+      handleError(error, req)
       return errorResponse(res, 500, "Server error.");
     }
   }

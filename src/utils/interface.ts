@@ -3,6 +3,9 @@ import { Request } from "express";
 export interface CustomRequest {
   user: IUser
   file: any
+  params: any
+  query: any
+  path: any
 }
 export interface IUserRequest extends Request {
     user: any

@@ -36,20 +36,6 @@ app.use((req, res, next) => res.status(404).send({
   message: "This is not the route you're looking for. You messed up",
 }));
 
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  if (!err.statusCode || err.statusCode === 500) {
-    console.log(`
-      Error caught at ${req.path}, 
-      Request body: ${JSON.stringify(req.body)},
-      Request User: ${JSON.stringify(req.user)},
-      Request Params: ${JSON.stringify(req.params)}
-      Request Query: ${JSON.stringify(req.query)}
-      Error Message: ${JSON.stringify(err.message)}
-      Error Logs: ${JSON.stringify(err.stack)}
-  }`);
-  }
-});
-
 (async () => {
   process.on("warning", (e) => config.logger.warn(e.stack));
   console.log("Waiting for DATABASE Connection...");
