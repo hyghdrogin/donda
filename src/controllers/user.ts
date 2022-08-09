@@ -76,6 +76,7 @@ export default class UserController {
       {token, userDetails}
       );
     } catch (error) {
+      handleError(error, req)
       return errorResponse(res, 500, "Server error")
     }
   }
@@ -99,6 +100,7 @@ export default class UserController {
       user
       );
     } catch (error) {
+      handleError(error, req)
       return errorResponse(res, 500, "Server error")
     }
   }
@@ -118,6 +120,7 @@ export default class UserController {
     
     return successResponse( res, 200, "Picture uploaded Successfully.", user );
     } catch (error) {
+      handleError(error, req)
       return errorResponse(res, 500, "Server error")
     }
   }
@@ -142,6 +145,7 @@ export default class UserController {
       201,
       "A token has been sent to your account for verification."
     );} catch (error) {
+      handleError(error, req)
       return errorResponse(res, 500, "Server error")
     }
   }
@@ -166,6 +170,7 @@ export default class UserController {
       "Account verified successfully kindly login."
       );
     } catch (error) {
+      handleError(error, req)
       return errorResponse(res, 500, "Server error")
     }
   }
