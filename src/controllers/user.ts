@@ -175,5 +175,41 @@ export default class UserController {
     }
   }
 
+    /**
+   * @param {object} req - The reset request object
+   * @param {object} res - The reset errorResponse object
+   * @returns {object} Success message
+   */
+     static async postMsg(req: Request, res: Response) {
+      try{
+          const { _id } = req.user;
+          const { post } = req.body;
+          const pst =  await models.Post.create({ post, user_id: _id} );
+          return successResponse(res, 200, "Post created.", pst);
+      } catch (error) {
+          handleError(error, req)
+          return errorResponse(res, 500, "Server error")
+      }
+    }
+  
+  
+      /**
+     * @param {object} req - The reset request object
+     * @param {object} res - The reset errorResponse object
+     * @returns {object} Success message
+     */  
+    static async createComment(req: Request, res: Response ) {
+      try {
+          const { content } = req.body;
+          const { _id } = req.user;
+  
+          const comm = await models.Comment.create({ content, user_id: _id, })
+          return successResponse(res, 200, "Post created.", comm);
+      } catch (error) {
+          handleError(error, req)
+          return errorResponse(res, 500, "Server error")
+      }
+    }
+
  
 }
