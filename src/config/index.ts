@@ -18,6 +18,7 @@ const config = {
   SMTP_EMAIL: process.env.SMTP_EMAIL,
   SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
   SENDGRID_EMAIL: process.env.SENDGRID_EMAIL,
+  PAYSTACK_SECRET_KEY: process.env.PAYSTACK_SECRET_KEY,
 };
 
 const absentConfig = Object.entries(config)

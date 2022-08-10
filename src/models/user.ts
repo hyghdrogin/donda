@@ -10,7 +10,8 @@ const userSchema = new Schema(
     phone: { type: String, unique: true },
     photo: { type: String },
     role: { type: String,  enum: ['admin', 'user'], default: "user"},
-    verified: { type: Boolean, default: false }
+    verified: { type: Boolean, default: false },
+    balance: { type: Number, default: 0 }
   },
   { timestamps: true }
 );

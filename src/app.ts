@@ -24,7 +24,6 @@ app.use(reqLogger) // request logger
 app.use("/api/v1", router);
 
 
-
 app.get("/", (req, res) => {
   res.send("Welcome to Donda app");
 });
@@ -33,7 +32,7 @@ app.get("/", (req, res) => {
 app.use((req, res, next) => res.status(404).send({
   status: "error",
   error: "Not found",
-  message: "This is not the route you're looking for. You messed up",
+  message: "Route not correct kindly check url.",
 }));
 
 (async () => {

@@ -47,6 +47,22 @@ export interface ILogin {
   password: string      
 }
 
+export interface ICredit {    
+  amount: number        
+  receiver: string      
+  sender: string      
+  status: string      
+  reference: string      
+}
+
+export interface IDebit {    
+  amount: number        
+  receiver: string      
+  sender: string      
+  status: string      
+  reference: string       
+}
+
 export interface IPost {
   _id: string;
   owner: string;
