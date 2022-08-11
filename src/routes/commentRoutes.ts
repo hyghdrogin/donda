@@ -8,5 +8,4 @@ const { verifyToken } = Authentication;
 
 // router.post("/comment", verifyToken, createComment);
 
-
 export default router;

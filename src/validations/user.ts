@@ -1,5 +1,5 @@
-import Joi from 'joi';
-import { IUser, ILogin } from '../utils/interface';
+import Joi from "joi";
+import { IUser, ILogin } from "../utils/interface";
 
 export const validateSignup = (user: IUser) => {
   const schema = Joi.object({

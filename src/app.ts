@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction } from "express";
+/* eslint-disable @typescript-eslint/no-namespace */
+/* eslint-disable @typescript-eslint/no-empty-interface */
 import express from "express";
 import cors from "cors";
 import router from "./routes/index";
@@ -6,7 +7,7 @@ import config from "./config";
 import db from "./config/database";
 
 import reqLogger from "./utils/reqLogger";
-import { CustomRequest } from "../src/utils/interface";
+import { CustomRequest } from "./utils/interface";
 
 const app = express();
 const port = config.PORT || 5000;
@@ -20,16 +21,15 @@ declare global {
   }
 }
 
-app.use(reqLogger) // request logger
+app.use(reqLogger); // request logger
 app.use("/api/v1", router);
-
 
 app.get("/", (req, res) => {
   res.send("Welcome to Donda app");
 });
 
 // Global 404 error handler
-app.use((req, res, next) => res.status(404).send({
+app.use((req, res) => res.status(404).send({
   status: "error",
   error: "Not found",
   message: "Route not correct kindly check url.",
@@ -41,7 +41,7 @@ app.use((req, res, next) => res.status(404).send({
   await db.connect();
   app.listen(config.PORT || 4000, async () => {
     console.log(
-      `${config.APP_NAME} API listening on ${config.PORT || 4000}`
+      `${config.APP_NAME} API listening on ${port || 4000}`
     );
   });
 })();

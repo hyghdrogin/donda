@@ -1,4 +1,4 @@
-import { Response, Request } from 'express';
+import { Response, Request } from "express";
 
 function errorResponse(
   res: Response,
@@ -15,7 +15,7 @@ function successResponse(
   message: string,
   data: any = [],
 ) {
-  const responseObject = {  statusCode, message, data };
+  const responseObject = { statusCode, message, data };
   return res.status(statusCode).send(responseObject);
 }
 
@@ -29,7 +29,7 @@ const handleError = (err: any, req: Request) => {
       Error Message: ${JSON.stringify(err.message)}
       Error Logs: ${JSON.stringify(err.stack)}
   }`);
-}
+};
 
 export {
   errorResponse,

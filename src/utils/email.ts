@@ -1,5 +1,6 @@
-import config from "../config";
+/* eslint-disable no-unused-expressions */
 import sgMail from "@sendgrid/mail";
+import config from "../config";
 // import nodemailer from 'nodemailer';
 // import config from "../config";
 
@@ -7,12 +8,12 @@ sgMail.setApiKey(config.SENDGRID_API_KEY as string);
 
 const msg: any = {
   from: `Donda <${config.SENDGRID_EMAIL}>`,
-  mail_settings: { sandbox_mode: { enable: false }}
+  mail_settings: { sandbox_mode: { enable: false } }
 };
 
 () => {
-    msg.mail_settings.sandbox_mode.enable = true;
-}
+  msg.mail_settings.sandbox_mode.enable = true;
+};
 
 const sendEmail = async (email: string, subject: string, message: string) => {
   try {
@@ -20,11 +21,11 @@ const sendEmail = async (email: string, subject: string, message: string) => {
     msg.subject = subject;
     msg.text = message;
     await sgMail.send(msg);
-    console.log("message sent...")
+    console.log("message sent...");
   } catch (err) {
     return err;
   }
-}
+};
 
 // let transporter: any;
 // const sendEmail = async (email: string, subject: string, message: string) => {

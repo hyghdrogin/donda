@@ -16,6 +16,6 @@ const parser = multer({
   limits: {
     fileSize: 5120 * 1024 * 1024,
   },
-}) ;
+});
 
 export default parser;

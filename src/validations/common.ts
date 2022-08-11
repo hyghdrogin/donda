@@ -1,4 +1,4 @@
-const Joi = require("joi");
+import Joi from "joi";
 
 const objectId = Joi.string()
   .length(24);

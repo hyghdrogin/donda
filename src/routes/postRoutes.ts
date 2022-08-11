@@ -11,10 +11,9 @@ const { verifyToken } = Authentication;
 router.post("/", verifyToken, validator(validatePost), createPost);
 
 router.get("/", verifyToken, getAllPost);
-router.get("/:postId", verifyToken, validator(validateId),  getPostById);
+router.get("/:postId", verifyToken, validator(validateId), getPostById);
 
-router.delete("/:postId", verifyToken, validator(validateId),  getPostById);
-router.patch("/:postId", verifyToken,validator(validateId),  getPostById);
-
+router.delete("/:postId", verifyToken, validator(validateId), getPostById);
+router.patch("/:postId", verifyToken, validator(validateId), getPostById);
 
 export default router;

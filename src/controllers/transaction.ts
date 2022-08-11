@@ -1,9 +1,8 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from "express";
 import models from "../models";
 import { successResponse, errorResponse, handleError } from "../utils/responses";
 import Payment from "../middlewares/paystack";
-import sendEmail from "../utils/email"
-import { IUser} from "../utils/interface";
+import sendEmail from "../utils/email";
 
 const { initializePayment, verifyPayment } = Payment;
 /**
@@ -22,16 +21,16 @@ export default class CreditController {
       const { _id } = req.user;
       const { amount } = req.body;
       const user = await models.User.findById(_id);
-      if (!user) { return errorResponse(res, 404, "User not found") };
+      if (!user) { return errorResponse(res, 404, "User not found"); }
       if (Number.isNaN(Number(amount)) || Number(amount) <= 0) {
         return errorResponse(res, 422, "Invalid amount.");
-      } 1000
+      }
       const transaction = await models.Credit.create({
         amount,
         receiver: _id,
         sender: _id,
         type: "bank-transfer"
-      })
+      });
       const paystack_data = {
         amount: amount * 100,
         email: user.email,
@@ -49,8 +48,8 @@ export default class CreditController {
         paymentDetails
       );
     } catch (error) {
-      handleError(error, req)
-      return errorResponse(res, 500, "Server error")
+      handleError(error, req);
+      return errorResponse(res, 500, "Server error");
     }
   }
 
@@ -66,16 +65,16 @@ export default class CreditController {
       if (!trxref) return errorResponse(res, 404, "No transaction reference found.");
 
       const resp: any = await verifyPayment(trxref as string);
-      
+
       const { data } = resp.data;
-      const { transactionId } = data.metadata
+      const { transactionId } = data.metadata;
       const transaction = await models.Credit.findById(transactionId).populate("receiver sender");
       if (!transaction) {
         return errorResponse(res, 404, "Transaction record not found, please contact support");
       }
       await models.Credit.findByIdAndUpdate(transactionId, {
-          reference: data.reference
-        });
+        reference: data.reference
+      });
       if (transaction.status !== "pending") {
         return errorResponse(res, 409, "transaction already settled");
       }
@@ -88,7 +87,7 @@ export default class CreditController {
       }
 
       if (["success", "successful"].includes(data.status)) {
-        const user = await models.Credit.findByIdAndUpdate(transactionId, {
+        const userCredit = await models.Credit.findByIdAndUpdate(transactionId, {
           status: "successful"
         });
         await models.User.findByIdAndUpdate(
@@ -96,14 +95,14 @@ export default class CreditController {
           { $inc: { balance: data.amount / 100 } },
           { new: true }
         );
-        const subject = "Payment Successful."
-        const message = "Account funded successfully."
+        const subject = "Payment Successful.";
+        const message = "Account funded successfully.";
         await sendEmail(receiver.email, subject, message);
-        return successResponse(res, 200, "Payment was successfully", transaction);
+        return successResponse(res, 200, "Payment was successfully", userCredit);
       }
       return errorResponse(res, 400, "Transaction could not be verified, please try again");
     } catch (error) {
-      handleError(error, req)
+      handleError(error, req);
       return errorResponse(res, 500, "Server error");
     }
   }

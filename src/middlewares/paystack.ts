@@ -1,3 +1,4 @@
+/* eslint-disable no-async-promise-executor */
 import axios from "axios";
 import config from "../config";
 
@@ -51,26 +52,26 @@ export default class Payment {
     });
   }
 
-//   static async createRecipient(form) {
-//     const options = {
-//       url: "https://api.paystack.co/transferrecipient",
-//       headers: {
-//         authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
-//         "content-type": "application/json",
-//         "cache-control": "no-cache",
-//       },
-//       method: "POST",
-//       data: form,
-//     };
-//     return new Promise(async (resolve, reject) => {
-//       try {
-//         const data = await axios.request(options);
-//         resolve(data);
-//       } catch (error) {
-//         reject(error);
-//       }
-//     });
-//   }
+  //   static async createRecipient(form) {
+  //     const options = {
+  //       url: "https://api.paystack.co/transferrecipient",
+  //       headers: {
+  //         authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+  //         "content-type": "application/json",
+  //         "cache-control": "no-cache",
+  //       },
+  //       method: "POST",
+  //       data: form,
+  //     };
+  //     return new Promise(async (resolve, reject) => {
+  //       try {
+  //         const data = await axios.request(options);
+  //         resolve(data);
+  //       } catch (error) {
+  //         reject(error);
+  //       }
+  //     });
+  //   }
 
 //   static async chargeAuthorization(form) {
 //     const options = {
