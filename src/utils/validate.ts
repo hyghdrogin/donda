@@ -1,6 +1,11 @@
 const options = {
   stripUnknown: true,
   abortEarly: false,
+  errors: {
+        wrap: {
+          label: ''
+        }
+      }
 };
 
 const validate = (schemas: any, values: any) => {
