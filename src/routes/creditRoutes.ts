@@ -2,7 +2,7 @@ import { Router } from "express";
 import CreditController from "../controllers/transaction";
 import Authentication from "../middlewares/auth";
 import validator from "../middlewares/validator";
-import { validateCredit } from "../validations/credit";
+import validateCredit from "../validations/credit";
 
 const router = Router();
 const { createTransaction, verify } = CreditController;

@@ -24,6 +24,9 @@
         "@typescript-eslint/no-unused-vars": "error",
         // "@typescript-eslint/no-explicit-any": "error",
         "camelcase": "off",
+        "allowShortCircuit": "off", 
+        "no-unused-expressions": "off",
+        "allowTernary": "off",
         "no-console": "off",
         "linebreak-style": "off",
         "quotes": [
