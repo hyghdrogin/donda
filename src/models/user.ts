@@ -17,4 +17,10 @@ const userSchema = new Schema(
   },
   { timestamps: true }
 );
+
+userSchema.index({
+  firstName: "text",
+  lastName: "text",
+});
+
 export default model<IUser>("User", userSchema);

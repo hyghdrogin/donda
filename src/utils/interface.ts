@@ -20,6 +20,17 @@ export interface CustomRequest {
   query: any
   path: any
 }
+
+interface Person {
+  $search: string;
+}
+
+export interface IFilter {
+  verified?: string
+  role?: string
+  $text: Person;
+}
+
 export interface IUserRequest extends Request {
   user: any
 }

@@ -11,12 +11,14 @@ import {
 const router = Router();
 const { verifyToken } = Authentication;
 const {
-  createUser, loginUser, updateProfile, resendOtp, verifyAccount, uploadProfilePicture
+  createUser, loginUser, updateProfile, resendOtp, verifyAccount, uploadProfilePicture, getAllUsers
 } = UserController;
 
 router.post("/login", validator(validateLogin), loginUser);
 router.post("/register", validator(validateSignup), createUser);
 router.post("/otp/resend", validator(validateEmail), resendOtp);
+
+router.get("/", verifyToken, getAllUsers);
 
 router.patch("/update", verifyToken, validator(validateProfile), updateProfile);
 router.patch("/verify", validator(validateAccount), verifyAccount);

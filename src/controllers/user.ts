@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import models from "../models";
 import { successResponse, errorResponse, handleError } from "../utils/responses";
 import jwtHelper from "../utils/jwt";
-import { IUser, IOtp } from "../utils/interface";
+import { IUser, IOtp, IFilter } from "../utils/interface";
 import sendEmail from "../utils/email";
 
 const { generateToken } = jwtHelper;
@@ -167,6 +167,35 @@ export default class UserController {
         res,
         200,
         "Account verified successfully kindly login."
+      );
+    } catch (error) {
+      handleError(error, req);
+      return errorResponse(res, 500, "Server error");
+    }
+  }
+
+  /**
+   * @param {object} req - The reset request object
+   * @param {object} res - The reset errorResponse object
+   * @returns {object} Success message
+   */
+  static async getAllUsers(req: Request, res: Response) {
+    try {
+      const { status, role, name } = req.query;
+      const filter = {} as IFilter;
+      status ? filter.verified = status as string : filter.verified = "true";
+      role ? filter.role = role as string : filter.role = "user";
+      if (name) {
+        filter.$text = {
+          $search: name as string
+        };
+      }
+      const users = await models.User.find(filter);
+      return successResponse(
+        res,
+        200,
+        "Account verified successfully kindly login.",
+        { total: users.length, users }
       );
     } catch (error) {
       handleError(error, req);
