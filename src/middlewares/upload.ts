@@ -18,4 +18,4 @@ const parser = multer({
   },
 });
 
-export default parser;
+export default parser; 
