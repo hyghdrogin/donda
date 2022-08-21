@@ -133,7 +133,6 @@ export default class UserController {
       const user: IUser | null = await models.User.findOne({ email });
       if (!user) { return errorResponse(res, 404, "Email does not exist."); }
       const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
-      console.log(otp);
       await models.Otp.findOneAndUpdate(email, { token: otp, expired: false });
       const subject = "Resend otp";
       const message = `hi, kindly verify your account with this token ${otp}`;
@@ -197,6 +196,54 @@ export default class UserController {
         "Account verified successfully kindly login.",
         { total: users.length, users }
       );
+    } catch (error) {
+      handleError(error, req);
+      return errorResponse(res, 500, "Server error");
+    }
+  }
+
+  /**
+   * @param {object} req - The reset request object
+   * @param {object} res - The reset errorResponse object
+   * @returns {object} Success message
+   */
+  static async recover(req: Request, res: Response) {
+    try {
+      const { email } = req.body;
+      const user = await models.User.findOne({ email });
+      if (!user) { return errorResponse(res, 404, "Email does not exist."); }
+      const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
+      await models.Otp.findOneAndUpdate(
+        email,
+        { token: otp, expired: false },
+        { upsert: true }
+      );
+      const subject = "Reset Password Otp";
+      const message = `hi, kindly use this ${otp} to reset your password`;
+      await sendEmail(email, subject, message);
+      return successResponse(res, 200, "Kindly use the otp in your mail to reset your password.");
+    } catch (error) {
+      handleError(error, req);
+      return errorResponse(res, 500, "Server error");
+    }
+  }
+
+  /**
+   * @param {object} req - The reset request object
+   * @param {object} res - The reset errorResponse object
+   * @returns {object} Success message
+   */
+  static async reset(req: Request, res: Response) {
+    try {
+      const { token, password, retypePassword } = req.body;
+      const otp = await models.Otp.findOne({ token });
+      if (!otp) return errorResponse(res, 404, "incorrect Otp");
+      if (password !== retypePassword) {
+        return errorResponse(res, 409, "Password mismatch.");
+      }
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await models.User.findOneAndUpdate({ email: otp.email }, { password: hashedPassword });
+      return successResponse(res, 200, "Password reset successfully, Kindly login.");
     } catch (error) {
       handleError(error, req);
       return errorResponse(res, 500, "Server error");

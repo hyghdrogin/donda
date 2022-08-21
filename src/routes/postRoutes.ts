@@ -5,11 +5,12 @@ import validator from "../middlewares/validator";
 import { validateId, validatePost } from "../validations/post";
 
 const router = Router();
-const { createPost,  getAllPost, getPostById, updatePost, deletePost} = PostController;
+const {
+  createPost, getAllPost, getPostById, updatePost, deletePost
+} = PostController;
 const { verifyToken } = Authentication;
 
 router.post("/", verifyToken, validator(validatePost), createPost);
-
 
 router.get("/", verifyToken, validator(validateId), getAllPost);
 router.get("/:postId", verifyToken, validator(validateId), getPostById);

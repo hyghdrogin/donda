@@ -1,5 +1,3 @@
-import { Request } from "express";
-
 export interface IUser {
   _id?: string
   email: string
@@ -15,10 +13,10 @@ export interface IUser {
 }
 export interface CustomRequest {
   user: IUser
-  file: any
-  params: any
-  query: any
-  path: any
+  file: object
+  params: object
+  query: object
+  path: object
 }
 
 interface Person {
@@ -29,10 +27,6 @@ export interface IFilter {
   verified?: string
   role?: string
   $text: Person;
-}
-
-export interface IUserRequest extends Request {
-  user: any
 }
 
 export interface IOtp {

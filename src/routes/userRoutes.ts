@@ -11,7 +11,8 @@ import {
 const router = Router();
 const { verifyToken } = Authentication;
 const {
-  createUser, loginUser, updateProfile, resendOtp, verifyAccount, uploadProfilePicture, getAllUsers
+  createUser, loginUser, updateProfile, resendOtp, verifyAccount,
+  uploadProfilePicture, getAllUsers, reset, recover
 } = UserController;
 
 router.post("/login", validator(validateLogin), loginUser);
@@ -23,5 +24,7 @@ router.get("/", verifyToken, getAllUsers);
 router.patch("/update", verifyToken, validator(validateProfile), updateProfile);
 router.patch("/verify", validator(validateAccount), verifyAccount);
 router.patch("/profile-picture", verifyToken, parser.single("image"), uploadProfilePicture);
+router.patch("/recover-account", recover);
+router.patch("/reset-password", reset);
 
 export default router;
