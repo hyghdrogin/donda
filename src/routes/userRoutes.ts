@@ -24,7 +24,7 @@ router.get("/", verifyToken, getAllUsers);
 router.patch("/update", verifyToken, validator(validateProfile), updateProfile);
 router.patch("/verify", validator(validateAccount), verifyAccount);
 router.patch("/profile-picture", verifyToken, parser.single("image"), uploadProfilePicture);
-router.patch("/recover-account", recover);
-router.patch("/reset-password", reset);
+router.patch("/recover-account", validator(validateEmail), recover);
+router.patch("/reset-password", verifyToken, reset);
 
 export default router;
