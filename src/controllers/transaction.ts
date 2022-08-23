@@ -68,7 +68,7 @@ export default class CreditController {
 
       const { data } = resp.data;
       const { transactionId } = data.metadata;
-      const transaction = await models.Credit.findById(transactionId).populate("receiver sender");
+      const transaction: any = await models.Credit.findById(transactionId).populate("receiver sender");
       if (!transaction) {
         return errorResponse(res, 404, "Transaction record not found, please contact support");
       }
@@ -78,7 +78,7 @@ export default class CreditController {
       if (transaction.status !== "pending") {
         return errorResponse(res, 409, "transaction already settled");
       }
-      const { receiver } = transaction as any;
+      const { receiver } = transaction;
       if (transaction.amount !== data.amount / 100) {
         await models.Credit.findByIdAndUpdate(transactionId, { status: "conflict" });
         // const message = "Transaction failed. Please contact support";
