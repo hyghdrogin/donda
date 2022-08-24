@@ -237,7 +237,7 @@ export default class UserController {
     try {
       const { token, password, retypePassword } = req.body;
       const otp = await models.Otp.findOne({ token });
-      if (!otp) return errorResponse(res, 404, "incorrect Otp");
+      if (!otp) { return errorResponse(res, 404, "incorrect Otp"); }
       if (password !== retypePassword) {
         return errorResponse(res, 409, "Password mismatch.");
       }
