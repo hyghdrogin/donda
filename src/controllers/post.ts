@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { isEmpty } from "lodash";
 import models from "../models";
 import { successResponse, errorResponse, handleError } from "../utils/responses";
 
@@ -33,6 +34,9 @@ export default class PostController {
   static async getAllPost(req: Request, res: Response) {
     try {
       const post = await models.Post.find({ });
+      if (isEmpty(post)) {
+        return successResponse(res, 204, "No content");
+      }
       return successResponse(res, 200, "Post fetched successfully.", post);
     } catch (error) {
       handleError(error, req);
