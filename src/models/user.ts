@@ -13,7 +13,8 @@ const userSchema = new Schema(
     photo: { type: String },
     role: { type: String, enum: ["admin", "user"], default: "user" },
     verified: { type: Boolean, default: false },
-    balance: { type: Number, default: 0 }
+    balance: { type: Number, default: 0 },
+    accountNo: { type: String, required: true, unique: true }
   },
   { timestamps: true }
 );
