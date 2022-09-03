@@ -32,8 +32,9 @@ export default class UserController {
         return errorResponse(res, 409, "phone number already used by another user.");
       }
       const hashedPassword = await bcrypt.hash(password, 10);
+      const accountNo = `20${Math.floor(Math.random() * 90000000)}`;
       await models.User.create({
-        firstName, lastName, email, password: hashedPassword, phone
+        firstName, lastName, email, password: hashedPassword, phone, accountNo
       });
       const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
       await models.Otp.create({ email, token: otp });
@@ -189,7 +190,7 @@ export default class UserController {
           $search: name as string
         };
       }
-      const users = await models.User.find(filter);
+      const users = await models.User.find(filter).select("-password");
       return successResponse(
         res,
         200,

@@ -6,6 +6,8 @@ export interface IUser {
   lastName?: string
   phone?: string
   photo?: string
+  accountNo?: string
+  balance?: number
   role?: string
   verified: boolean
   createdAt?: Date

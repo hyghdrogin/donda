@@ -9,6 +9,10 @@ const debitSchema = new Schema({
     type: String,
     enum: ["pending", "successful", "declined", "failed", "cancelled", "conflict"],
   },
+  type: {
+    type: String,
+    enum: ["bank-transfer", "withdrawal"],
+  },
 
 }, { timestamps: true });
 
