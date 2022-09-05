@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { boolean } from "joi";
 import models from "../models";
 import { successResponse, errorResponse, handleError } from "../utils/responses";
 import jwtHelper from "../utils/jwt";
