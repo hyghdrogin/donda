@@ -15,7 +15,8 @@ const userSchema = new Schema(
     verified: { type: Boolean, default: false },
     active: { type: Boolean, default: true },
     balance: { type: Number, default: 0 },
-    accountNo: { type: String, required: true, unique: true }
+    accountNo: { type: String, required: true, unique: true },
+    activeUser: { type: Boolean, enum: ["true", "false"], default: "true" }
   },
   { timestamps: true }
 );
