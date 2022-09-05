@@ -13,6 +13,7 @@ const userSchema = new Schema(
     photo: { type: String },
     role: { type: String, enum: ["admin", "user"], default: "user" },
     verified: { type: Boolean, default: false },
+    active: { type: Boolean, default: true },
     balance: { type: Number, default: 0 },
     accountNo: { type: String, required: true, unique: true }
   },
