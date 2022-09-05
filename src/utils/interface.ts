@@ -10,7 +10,7 @@ export interface IUser {
   balance?: number
   role?: string
   verified: boolean
-  activeUser: boolean
+  active: boolean
   createdAt?: Date
   updatedAt?: Date
 }

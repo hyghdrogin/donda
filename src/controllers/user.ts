@@ -65,11 +65,11 @@ export default class UserController {
       if (!validpass) { return errorResponse(res, 404, "Password is not correct!."); }
       const { _id, phone } = user;
       const token = await generateToken({ _id, email, phone });
-      if (user.activeUser !== true) {
+      if (user.active !== true) {
         return errorResponse(res, 403, "User account temporarily on hold, contact admin");
       }
       const userDetails = {
-        _id, email, firstname: user.firstName, lastName: user.lastName, phone: user.phone, role: user.role, photo: user.photo, activeUser: user.activeUser
+        _id, email, firstname: user.firstName, lastName: user.lastName, phone: user.phone, role: user.role, photo: user.photo, active: user.active
       };
       return successResponse(
         res,
