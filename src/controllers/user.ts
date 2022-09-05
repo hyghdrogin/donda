@@ -69,7 +69,7 @@ export default class UserController {
         return errorResponse(res, 403, "User account temporarily on hold, contact admin");
       }
       const userDetails = {
-        _id, email, firstname: user.firstName, lastName: user.lastName, phone: user.phone, role: user.role, photo: user.photo
+        _id, email, firstname: user.firstName, lastName: user.lastName, phone: user.phone, role: user.role, photo: user.photo, activeUser: user.activeUser
       };
       return successResponse(
         res,
