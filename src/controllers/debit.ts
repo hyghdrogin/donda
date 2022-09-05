@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { errorResponse, successResponse } from "../utils/responses";
+import { errorResponse, successResponse, handleError } from "../utils/responses";
 import models from "../models";
 
 /**
@@ -55,6 +55,7 @@ export default class AdminDebitController {
       });
       return successResponse(res, 201, "Amount has been sent successfully.", createTransaction);
     } catch (error) {
+      handleError(error, req);
       return errorResponse(res, 500, "Server error.");
     }
   }
