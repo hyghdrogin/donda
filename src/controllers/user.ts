@@ -61,12 +61,13 @@ export default class UserController {
       if (!user.verified) {
         return errorResponse(res, 409, "Kindly verify your account before logging in.");
       }
+      if (user.active !== true) { return errorResponse(res, 403, "Account has been deactivated. Please contact admin."); }
       const validpass = await bcrypt.compare(password, user.password);
       if (!validpass) { return errorResponse(res, 404, "Password is not correct!."); }
       const { _id, phone } = user;
       const token = await generateToken({ _id, email, phone });
       const userDetails = {
-        _id, email, firstname: user.firstName, lastName: user.lastName, phone: user.phone, role: user.role, photo: user.photo
+        _id, email, firstname: user.firstName, lastName: user.lastName, phone: user.phone, role: user.role, photo: user.photo, active: user.active
       };
       return successResponse(
         res,

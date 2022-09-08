@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { errorResponse, successResponse } from "../utils/responses";
+import { errorResponse, handleError, successResponse } from "../utils/responses";
 import models from "../models";
+import { IUser } from "../utils/interface";
 
 /**
  * @class AdmintransactionController
@@ -55,6 +56,45 @@ export default class AdminDebitController {
       });
       return successResponse(res, 201, "Amount has been sent successfully.", createTransaction);
     } catch (error) {
+      return errorResponse(res, 500, "Server error.");
+    }
+  }
+
+  /**
+     * @param {object} req - The user request object
+     * @param {object} res - The user response object
+     * @returns {object} Success message
+     */
+  static async requestWithdrawal(req: Request, res: Response) {
+    try {
+      const { _id } = req.user;
+      const { amount, account } = req.body;
+
+      const user = await models.User.findById({ _id });
+      if (!user) return errorResponse(res, 404, "User not found.");
+
+      if (Number.isNaN(Number(amount)) || Number(amount) <= 0) {
+        return errorResponse(res, 422, "Invalid amount.");
+      }
+      const acc: IUser | null = await models.User.findOne({ accountNo: account });
+      if (!acc) return errorResponse(res, 404, "Account number does not exist.");
+
+      if (account !== user.accountNo) return errorResponse(res, 404, "Wrong account number.");
+
+      const balance = user.balance as number;
+      if (balance < amount) {
+        return errorResponse(res, 400, "Sorry there is not enough money in your account.");
+      }
+      await models.Debit.create({
+        amount,
+        sender: _id,
+        type: "withdrawal",
+        status: "successful"
+      });
+      await models.User.findByIdAndUpdate(_id, { $inc: { balance: -amount } });
+      return successResponse(res, 201, "Withdrawal successful.");
+    } catch (error) {
+      handleError(error, req);
       return errorResponse(res, 500, "Server error.");
     }
   }

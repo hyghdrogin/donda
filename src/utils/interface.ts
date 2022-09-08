@@ -9,6 +9,7 @@ export interface IUser {
   accountNo?: string
   balance?: number
   role?: string
+  active?: boolean
   verified: boolean
   createdAt?: Date
   updatedAt?: Date
