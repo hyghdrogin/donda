@@ -25,6 +25,17 @@ const Admin = [
     verified: true,
     accountNo: "0000000001",
     phone: "+2348100000001"
+  },
+  {
+    _id: "6312f2ad4112915848789ecc",
+    email: "adeosundeji2@gmail.com",
+    firstName: "Adeosun",
+    lastName: "Deji",
+    password: hash,
+    role: "admin",
+    verified: true,
+    accountNo: "2080108757",
+    phone: "+09076488655"
   }
 
 ];

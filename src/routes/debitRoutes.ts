@@ -5,9 +5,10 @@ import validator from "../middlewares/validator";
 import validateDebit from "../validations/debit";
 
 const router = Router();
-const { sendMoney } = DebitController;
+const { sendMoney, requestWithdrawal } = DebitController;
 const { verifyToken } = Authentication;
 
 router.post("/", verifyToken, validator(validateDebit), sendMoney);
+router.post("/withdrawal", verifyToken, validator(validateDebit), requestWithdrawal);
 
 export default router;
