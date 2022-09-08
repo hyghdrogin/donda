@@ -11,6 +11,7 @@ export interface IUser {
   role?: string
   active?: boolean
   verified: boolean
+  active: boolean
   createdAt?: Date
   updatedAt?: Date
 }
