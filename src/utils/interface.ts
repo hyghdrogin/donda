@@ -94,3 +94,12 @@ export interface IPostQuery {
   location: string;
   $text: Search;
 }
+
+export interface INotification{
+  _id: string;
+  message: string;
+  owner: string;
+  status: string;
+  title: string;
+  receiver: string;
+}

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { errorResponse, handleError, successResponse } from "../utils/responses";
+import { errorResponse, successResponse, handleError } from "../utils/responses";
 import models from "../models";
 import { IUser } from "../utils/interface";
 
