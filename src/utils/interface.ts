@@ -81,15 +81,6 @@ export interface IPost {
   updatedAt?: Date
 }
 
-export interface INotification {
-  _id: string;
-  owner: string;
-  title: string;
-  message: string;
-  status: string;
-  sender: string;
-}
-
 export interface Search {
   $search: string;
 }
