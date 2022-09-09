@@ -9,7 +9,6 @@ export interface IUser {
   accountNo?: string
   balance?: number
   role?: string
-  active?: boolean
   verified: boolean
   active: boolean
   createdAt?: Date
@@ -94,4 +93,13 @@ export interface IPostQuery {
   comment: number;
   location: string;
   $text: Search;
+}
+
+export interface INotification{
+  _id: string;
+  message: string;
+  owner: string;
+  status: string;
+  title: string;
+  receiver: string;
 }
