@@ -5,6 +5,7 @@ import commentRoutes from "./commentRoutes";
 import creditRoutes from "./creditRoutes";
 import debitRoutes from "./debitRoutes";
 import adminRoutes from "./adminRoutes";
+import notificationRoute from "./notificationRoute";
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use("/comments", commentRoutes);
 router.use("/credits", creditRoutes);
 router.use("/debits", debitRoutes);
 router.use("/admins", adminRoutes);
+router.use("/notify", notificationRoute);
 
 export default router;

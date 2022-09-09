@@ -9,7 +9,6 @@ export interface IUser {
   accountNo?: string
   balance?: number
   role?: string
-  active?: boolean
   verified: boolean
   active: boolean
   createdAt?: Date
@@ -80,6 +79,15 @@ export interface IPost {
   location: string;
   createdAt?: Date
   updatedAt?: Date
+}
+
+export interface INotification {
+  _id: string;
+  owner: string;
+  title: string;
+  message: string;
+  status: string;
+  sender: string;
 }
 
 export interface Search {
