@@ -109,7 +109,7 @@ export default class AdminDebitController {
   //   try {
   //     const { id } = req.user;
   //     const transactions = await models.debit.findMany({ where: { user: id } });
-  //     return successResponse(res, 200, "Successfully retrived all Debit Transactions.", transactions);
+  //     return successResponse(res, 200, "Successfully retriesved all Debit Transactions.", transactions);
   //   } catch (error) {
   //     return errorResponse(res, 500, "Server error.");
   //   }
