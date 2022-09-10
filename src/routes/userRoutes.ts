@@ -23,8 +23,8 @@ router.post("/register", validator(validateSignup), createUser);
 router.post("/otp/resend", validator(validateEmail), resendOtp);
 
 router.get("/", verifyToken, getAllUsers);
-router.get("/notifications", verifyToken,  getAllNotification);
-router.get("/notifications/:notificationId", verifyToken, getNotificationById );
+router.get("/notifications", verifyToken, getAllNotification);
+router.get("/notifications/:notificationId", verifyToken, getNotificationById);
 
 router.patch("/update", verifyToken, validator(validateProfile), updateProfile);
 router.patch("/verify", validator(validateAccount), verifyAccount);
@@ -32,6 +32,6 @@ router.patch("/profile-picture", verifyToken, parser.single("image"), uploadProf
 router.patch("/recover-account", validator(validateEmail), recover);
 router.patch("/reset-password", validator(validateAccount), reset);
 
-router.delete("/notifications/:notificationId", verifyToken, validator(validateNotificationId), getNotificationById );
+router.delete("/notifications/:notificationId", verifyToken, validator(validateNotificationId), deleteNotification);
 
 export default router;
