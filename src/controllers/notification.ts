@@ -58,8 +58,7 @@ export default class NotificationController {
       if (isEmpty(notification)) {
         return successResponse(res, 204, "No content");
       }
-      console.log(notification.receiver);
-      if (user.email !== notification.receiver) {
+      if (user.email !== notification?.receiver) {
         return successResponse(res, 204, "No content");
       }
       return successResponse(res, 200, "Notification fetched successfully.", notification);

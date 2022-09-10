@@ -11,6 +11,6 @@ const { verifyToken } = Authentication;
 router.post("/", verifyToken, validator(validateFeedback), feedbacks);
 router.get("/getAll", verifyToken, getAllFeedbacks);
 
-router.patch("/:feedbackId", verifyToken, validator(validateId), getFeedbackById);
+router.get("/:feedbackId", verifyToken, validator(validateId), getFeedbackById);
 
 export default router;
