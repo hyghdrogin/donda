@@ -19,22 +19,22 @@ export default class NotificationController {
       const { _id } = req.user;
       const { title, message, email } = req.body;
       const user = await models.User.findById(_id);
-      if(!user){
-        return errorResponse (res, 404, "Kindly log in.");
+      if (!user) {
+        return errorResponse(res, 404, "Kindly log in.");
       }
-      if(user.role !== "admin"){
-        return errorResponse (res, 404, "Unauthorized access");
+      if (user.role !== "admin") {
+        return errorResponse(res, 404, "Unauthorized access");
       }
       const receiver = await models.User.findOne({ email });
-      if(!receiver){
-        return errorResponse (res, 404, "Receiver does not exist.")
+      if (!receiver) {
+        return errorResponse(res, 404, "Receiver does not exist.");
       }
       const notify = await models.Notification.create({
         title,
         message,
         user_id: _id,
         receiver: email
-      })
+      });
       return successResponse(res, 200, "Notification created.", notify);
     } catch (error) {
       handleError(error, req);
@@ -49,18 +49,18 @@ export default class NotificationController {
    */
   static async getAllNotification(req: Request, res: Response) {
     try {
-        const { _id } = req.user;
-        const user = await models.User.findById(_id);
-        if(!user){
-          return errorResponse (res, 404, "Kindly log in.");
-        }
+      const { _id } = req.user;
+      const user = await models.User.findById(_id);
+      if (!user) {
+        return errorResponse(res, 404, "Kindly log in.");
+      }
       const notification = await models.Notification.findOne({ });
       if (isEmpty(notification)) {
         return successResponse(res, 204, "No content");
       }
       console.log(notification.receiver);
-      if (user.email !== notification.receiver){
-        return successResponse (res, 204, "No content")
+      if (user.email !== notification.receiver) {
+        return successResponse(res, 204, "No content");
       }
       return successResponse(res, 200, "Notification fetched successfully.", notification);
     } catch (error) {
@@ -79,15 +79,15 @@ export default class NotificationController {
       const { _id } = req.user;
       const { notificationId } = req.params;
       const user = await models.User.findById(_id);
-      if(!user){
-        return errorResponse (res, 404, "Kindly log in.");
+      if (!user) {
+        return errorResponse(res, 404, "Kindly log in.");
       }
       const notification = await models.Notification.findById(notificationId);
       if (!notification) {
         return errorResponse(res, 404, "Notification not found.");
       }
-      if (user.email !== notification.receiver){
-        return successResponse (res, 204, "No content")
+      if (user.email !== notification.receiver) {
+        return successResponse(res, 204, "No content");
       }
       return successResponse(res, 200, "Notification fetched successfully.", notification);
     } catch (error) {
@@ -106,13 +106,13 @@ export default class NotificationController {
       const { _id } = req.user;
       const { notificationId } = req.params;
       const user = await models.User.findById(_id);
-      if(!user){
-        return errorResponse (res, 404, "Kindly log in.");
+      if (!user) {
+        return errorResponse(res, 404, "Kindly log in.");
       }
       const notification = await models.Notification.findByIdAndDelete(notificationId);
       console.log(notification?.receiver);
-      if (user.email !== notification?.receiver){
-        return successResponse (res, 204, "No content")
+      if (user.email !== notification?.receiver) {
+        return successResponse(res, 204, "No content");
       }
       return successResponse(res, 200, "Notification deleted successfully.", notification);
     } catch (error) {

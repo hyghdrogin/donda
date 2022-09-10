@@ -7,7 +7,7 @@ import { validateNotification } from "../validations/notification";
 import NotificationController from "../controllers/notification";
 
 const router = Router();
-const { createNotification } = NotificationController
+const { createNotification } = NotificationController;
 const { activeDeactivateUser } = AdminController;
 const { verifyToken, verifyAdmin } = Authentication;
 

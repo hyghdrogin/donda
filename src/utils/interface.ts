@@ -81,6 +81,15 @@ export interface IPost {
   updatedAt?: Date
 }
 
+export interface INotification{
+  _id: string;
+  message: string;
+  owner: string;
+  status: string;
+  title: string;
+  receiver: string;
+}
+
 export interface Search {
   $search: string;
 }
@@ -101,13 +110,4 @@ export interface IFeedback {
   feedback: string
   owner: string;
   verified: boolean
-}
-
-export interface INotification{
-  _id: string;
-  message: string;
-  owner: string;
-  status: string;
-  title: string;
-  receiver: string;
 }
