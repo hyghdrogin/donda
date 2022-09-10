@@ -95,6 +95,14 @@ export interface IPostQuery {
   $text: Search;
 }
 
+export interface IFeedback {
+  _id: string;
+  email: string
+  feedback: string
+  owner: string;
+  verified: boolean
+}
+
 export interface INotification{
   _id: string;
   message: string;
