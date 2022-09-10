@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { errorResponse, handleError, successResponse } from "../utils/responses";
+import { errorResponse, successResponse, handleError } from "../utils/responses";
 import models from "../models";
 import { IUser } from "../utils/interface";
 
@@ -56,6 +56,7 @@ export default class AdminDebitController {
       });
       return successResponse(res, 201, "Amount has been sent successfully.", createTransaction);
     } catch (error) {
+      handleError(error, req);
       return errorResponse(res, 500, "Server error.");
     }
   }
@@ -108,7 +109,7 @@ export default class AdminDebitController {
   //   try {
   //     const { id } = req.user;
   //     const transactions = await models.debit.findMany({ where: { user: id } });
-  //     return successResponse(res, 200, "Successfully retrived all Debit Transactions.", transactions);
+  //     return successResponse(res, 200, "Successfully retriesved all Debit Transactions.", transactions);
   //   } catch (error) {
   //     return errorResponse(res, 500, "Server error.");
   //   }

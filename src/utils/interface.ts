@@ -9,8 +9,8 @@ export interface IUser {
   accountNo?: string
   balance?: number
   role?: string
-  active?: boolean
   verified: boolean
+  active: boolean
   createdAt?: Date
   updatedAt?: Date
 }
@@ -101,4 +101,13 @@ export interface IFeedback {
   feedback: string
   owner: string;
   verified: boolean
+}
+
+export interface INotification{
+  _id: string;
+  message: string;
+  owner: string;
+  status: string;
+  title: string;
+  receiver: string;
 }
