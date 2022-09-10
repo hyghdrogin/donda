@@ -94,3 +94,11 @@ export interface IPostQuery {
   location: string;
   $text: Search;
 }
+
+export interface IFeedback {
+  _id: string;
+  email: string
+  feedback: string
+  owner: string;
+  verified: boolean
+}

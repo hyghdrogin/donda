@@ -41,7 +41,7 @@ export default class UserController {
       const subject = "User created";
       const message = `hi, thank you for signing up kindly verify your account with this token ${otp}`;
       await sendEmail(email, subject, message);
-      return successResponse(res, 201, "Account created successfully, kindly login.");
+      return successResponse(res, 201, "Account created successfully, kindly verify your email and login.");
     } catch (error) {
       handleError(error, req);
       return errorResponse(res, 500, "Server error.");
