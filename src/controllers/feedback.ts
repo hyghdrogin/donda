@@ -16,12 +16,15 @@ export default class FeedbackController {
      */
   static async feedbacks(req: Request, res: Response) {
     try {
+      const { _id } = req.user;
       const { email, feedback } = req.body;
+
+      await models.User.findById({ _id });
 
       const emailExist = await models.User.findOne({ email });
       if (!emailExist) return errorResponse(res, 404, "email not found.");
 
-      await models.Feedback.create({ feedback, email });
+      await models.Feedback.create({ user_id: _id, feedback, email });
       if (!feedback) return errorResponse(res, 404, "Feedback not found. Please input your feedback.");
       return successResponse(res, 201, "Feedback submitted.");
     } catch (error) {
