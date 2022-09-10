@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import models from "../models";
-import { IFilter } from "../utils/interface";
 import { successResponse, errorResponse, handleError } from "../utils/responses";
 
 /**
@@ -14,19 +13,12 @@ export default class FeedbackController {
      * @param {object} res - The reset errorResponse object
      * @returns {object} Success message
      */
-  static async feedbacks(req: Request, res: Response) {
+  static async createfeedback(req: Request, res: Response) {
     try {
       const { _id } = req.user;
-      const { email, feedback } = req.body;
-
-      await models.User.findById({ _id });
-
-      const emailExist = await models.User.findOne({ email });
-      if (!emailExist) return errorResponse(res, 404, "email not found.");
-
-      await models.Feedback.create({ user_id: _id, feedback, email });
-      if (!feedback) return errorResponse(res, 404, "Feedback not found. Please input your feedback.");
-      return successResponse(res, 201, "Feedback submitted.");
+      const { feedback } = req.body;
+      const newFeedback = await models.Feedback.create({ owner: _id, feedback });
+      return successResponse(res, 201, "Feedback submitted.", newFeedback);
     } catch (error) {
       handleError(error, req);
       return errorResponse(res, 500, "Server error.");
@@ -38,12 +30,9 @@ export default class FeedbackController {
      * @param {object} res - The reset errorResponse object
      * @returns {object} Success message
      */
-  static async getAllFeedbacks(req: Request, res: Response) {
+  static async getAllVerifiedFeedbacks(req: Request, res: Response) {
     try {
-      const { status } = req.query;
-      const filter = {} as IFilter;
-      status ? filter.verified = status as string : filter.verified = "true";
-      const feedbacks = await models.Feedback.find({ });
+      const feedbacks = await models.Feedback.find({ verified: true });
       return successResponse(
         res,
         200,
@@ -69,6 +58,26 @@ export default class FeedbackController {
         return errorResponse(res, 404, "feedback not found.");
       }
       return successResponse(res, 200, "feedback fetched successfully.", feedback);
+    } catch (error) {
+      handleError(error, req);
+      return errorResponse(res, 500, "Server error");
+    }
+  }
+
+  /**
+   * @param {object} req - The reset request object
+   * @param {object} res - The reset errorResponse object
+   * @returns {object} Success message
+   */
+  static async verifyFeedback(req: Request, res: Response) {
+    try {
+      const { feedbackId } = req.params;
+      const feedback = await models.Feedback.findById(feedbackId);
+      if (!feedback) {
+        return errorResponse(res, 404, "feedback not found.");
+      }
+      const updatedFeedback = await models.Feedback.findByIdAndUpdate(feedbackId, { verified: true }, { new: true });
+      return successfully(res, 200, "Feedback updated successfully.", updatedFeedback);
     } catch (error) {
       handleError(error, req);
       return errorResponse(res, 500, "Server error");

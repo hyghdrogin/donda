@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { isEmpty } from "lodash";
 import models from "../models";
 import { successResponse, errorResponse, handleError } from "../utils/responses";
 
@@ -16,24 +15,15 @@ export default class NotificationController {
    */
   static async createNotification(req: Request, res: Response) {
     try {
-      const { _id } = req.user;
-      const { title, message, email } = req.body;
-      const user = await models.User.findById(_id);
+      const { title, message, userId } = req.body;
+      const user = await models.User.findById(userId);
       if (!user) {
-        return errorResponse(res, 404, "Kindly log in.");
-      }
-      if (user.role !== "admin") {
-        return errorResponse(res, 404, "Unauthorized access");
-      }
-      const receiver = await models.User.findOne({ email });
-      if (!receiver) {
-        return errorResponse(res, 404, "Receiver does not exist.");
+        return errorResponse(res, 404, "User does not exist.");
       }
       const notify = await models.Notification.create({
         title,
         message,
-        user_id: _id,
-        receiver: email
+        owner: userId
       });
       return successResponse(res, 200, "Notification created.", notify);
     } catch (error) {
@@ -50,17 +40,9 @@ export default class NotificationController {
   static async getAllNotification(req: Request, res: Response) {
     try {
       const { _id } = req.user;
-      const user = await models.User.findById(_id);
-      if (!user) {
-        return errorResponse(res, 404, "Kindly log in.");
-      }
-      const notification = await models.Notification.findOne({ });
-      if (isEmpty(notification)) {
-        return successResponse(res, 204, "No content");
-      }
-      if (user.email !== notification?.receiver) {
-        return successResponse(res, 204, "No content");
-      }
+      const notification = await models.Notification.find({ owner: _id }).populate([
+        { path: "owner", select: "_id firstName lastName email photo", },
+      ]);
       return successResponse(res, 200, "Notification fetched successfully.", notification);
     } catch (error) {
       handleError(error, req);
@@ -77,16 +59,12 @@ export default class NotificationController {
     try {
       const { _id } = req.user;
       const { notificationId } = req.params;
-      const user = await models.User.findById(_id);
-      if (!user) {
-        return errorResponse(res, 404, "Kindly log in.");
-      }
-      const notification = await models.Notification.findById(notificationId);
+
+      const notification = await models.Notification.findOne({ _id: notificationId, owner: _id }).populate([
+        { path: "owner", select: "_id firstName lastName email photo", },
+      ]);
       if (!notification) {
         return errorResponse(res, 404, "Notification not found.");
-      }
-      if (user.email !== notification.receiver) {
-        return successResponse(res, 204, "No content");
       }
       return successResponse(res, 200, "Notification fetched successfully.", notification);
     } catch (error) {
@@ -108,12 +86,31 @@ export default class NotificationController {
       if (!user) {
         return errorResponse(res, 404, "Kindly log in.");
       }
-      const notification = await models.Notification.findByIdAndDelete(notificationId);
-      console.log(notification?.receiver);
-      if (user.email !== notification?.receiver) {
-        return successResponse(res, 204, "No content");
-      }
-      return successResponse(res, 200, "Notification deleted successfully.", notification);
+      await models.Notification.findByIdAndRemove(notificationId);
+      return successResponse(res, 200, "Notification deleted successfully.");
+    } catch (error) {
+      handleError(error, req);
+      return errorResponse(res, 500, "Server error");
+    }
+  }
+
+  /**
+   * @param {object} req - The reset request object
+   * @param {object} res - The reset errorResponse object
+   * @returns {object} Success message
+   */
+  static async createBulkNotification(req: Request, res: Response) {
+    try {
+      const { title, message } = req.body;
+      const users = await models.User.find({ role: "user" });
+      console.log("users", user);
+      let array = [];
+      array = users.map((user) => {
+        return { title, message, owner: user._id };
+      });
+      console.log("array", array);
+      // await models.Notification.insertMany(array);
+      return successResponse(res, 200, "Notifications created successfully.");
     } catch (error) {
       handleError(error, req);
       return errorResponse(res, 500, "Server error");
