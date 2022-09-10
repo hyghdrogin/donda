@@ -77,7 +77,7 @@ export default class FeedbackController {
         return errorResponse(res, 404, "feedback not found.");
       }
       const updatedFeedback = await models.Feedback.findByIdAndUpdate(feedbackId, { verified: true }, { new: true });
-      return successfully(res, 200, "Feedback updated successfully.", updatedFeedback);
+      return successResponse(res, 200, "Feedback updated successfully.", updatedFeedback);
     } catch (error) {
       handleError(error, req);
       return errorResponse(res, 500, "Server error");
