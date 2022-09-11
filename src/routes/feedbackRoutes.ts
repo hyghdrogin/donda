@@ -5,11 +5,11 @@ import validator from "../middlewares/validator";
 import { validateFeedback, validateId } from "../validations/feedback";
 
 const router = Router();
-const { feedbacks, getAllFeedbacks, getFeedbackById } = FeedbackController;
+const { createfeedback, getAllVerifiedFeedbacks, getFeedbackById } = FeedbackController;
 const { verifyToken } = Authentication;
 
-router.post("/", verifyToken, validator(validateFeedback), feedbacks);
-router.get("/getAll", verifyToken, getAllFeedbacks);
+router.post("/", verifyToken, validator(validateFeedback), createfeedback);
+router.get("/getAll", verifyToken, getAllVerifiedFeedbacks);
 
 router.get("/:feedbackId", verifyToken, validator(validateId), getFeedbackById);
 
