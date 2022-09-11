@@ -66,6 +66,7 @@ export default class NotificationController {
       if (!notification) {
         return errorResponse(res, 404, "Notification not found.");
       }
+      await models.Notification.findByIdAndUpdate(notificationId, { status: "read" });
       return successResponse(res, 200, "Notification fetched successfully.", notification);
     } catch (error) {
       handleError(error, req);
