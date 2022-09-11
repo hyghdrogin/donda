@@ -61,7 +61,7 @@ export default class NotificationController {
       const { notificationId } = req.params;
 
       const notification = await models.Notification.findOne({ _id: notificationId, owner: _id }).populate([
-        { path: "owner", select: "_id firstName lastName email photo", },
+        { path: "owner", select: "_id firstName lastName email photo" },
       ]);
       if (!notification) {
         return errorResponse(res, 404, "Notification not found.");
@@ -103,13 +103,11 @@ export default class NotificationController {
     try {
       const { title, message } = req.body;
       const users = await models.User.find({ role: "user" });
-      console.log("users", user);
       let array = [];
       array = users.map((user) => {
         return { title, message, owner: user._id };
       });
-      console.log("array", array);
-      // await models.Notification.insertMany(array);
+      await models.Notification.insertMany(array);
       return successResponse(res, 200, "Notifications created successfully.");
     } catch (error) {
       handleError(error, req);

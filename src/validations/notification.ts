@@ -5,7 +5,7 @@ export const validateNotification = {
   body: Joi.object({
     title: Joi.string().min(2).max(50).required(),
     message: Joi.string().min(2).max(3000).required(),
-    email: Joi.string().email(),
+    userId: Joi.string(),
   }).messages({
     "object.unknown": "You have used an invalid key."
   })
@@ -14,8 +14,8 @@ export const validateNotification = {
 export const validateNotificationId = {
   params: Joi.object({
     notificationId: objectId.messages({
-      "any.required": "Post is required.",
-      "string.length": "Post id must be a valid mongoose id.",
+      "any.required": "Notification is required.",
+      "string.length": "Notification id must be a valid mongoose id.",
     }),
   }).messages({
     "object.unknown": "You have used an invalid key."
