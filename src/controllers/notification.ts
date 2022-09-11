@@ -103,13 +103,11 @@ export default class NotificationController {
     try {
       const { title, message } = req.body;
       const users = await models.User.find({ role: "user" });
-      console.log("users", users);
       let array = [];
       array = users.map((user) => {
         return { title, message, owner: user._id };
       });
-      console.log("array", array);
-      // await models.Notification.insertMany(array);
+      await models.Notification.insertMany(array);
       return successResponse(res, 200, "Notifications created successfully.");
     } catch (error) {
       handleError(error, req);

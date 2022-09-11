@@ -3,7 +3,7 @@ import { INotification } from "../utils/interface";
 
 const notificationSchema = new Schema(
   {
-    owner: { type: Schema.Types.ObjectId, ref: "user" },
+    owner: { type: Schema.Types.ObjectId, ref: "User" },
     title: { type: String, maxLength: 50 },
     message: { type: String, maxLength: 3000 },
     status: { type: String, enum: ["read", "unread"], default: "unread" }
