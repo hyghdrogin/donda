@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
+import config from "../config";
 
-const password = "password";
+const password = config.ADMIN_PASSWORD as string;
 const hash = bcrypt.hashSync(password, 10);
 
 const Admin = [
