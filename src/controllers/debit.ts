@@ -107,8 +107,7 @@ export default class AdminDebitController {
      */
   static async getDebitTransactions(req: Request, res: Response) {
     try {
-      const { _id } = req.user;
-      const transactions = await models.Debit.find({ where: { user: _id } });
+      const transactions = await models.Debit.find({ user: req.user._id });
       return successResponse(res, 200, "Successfully retrieved all Debit Transactions.", transactions);
     } catch (error) {
       return errorResponse(res, 500, "Server error.");
@@ -122,8 +121,7 @@ export default class AdminDebitController {
      */
   static async getDebitTransactionById(req: Request, res: Response) {
     try {
-      const { debitId } = req.params;
-      const transaction = await models.Debit.findOne({ where: { id: debitId } });
+      const transaction = await models.Debit.findOne({ debit: req.params.debitId });
       if (!transaction) return errorResponse(res, 404, "Transaction not found");
       return successResponse(res, 200, "Successfully retrieved Transaction.", transaction);
     } catch (error) {
