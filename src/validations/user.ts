@@ -15,7 +15,7 @@ export const validateSignup = (user: IUser) => {
 
 export const validateLogin = (login: ILogin) => {
   const schema = Joi.object({
-    email: Joi.string().email().required(),
+    EmailPhone: Joi.string().required(),
     password: Joi.string().required(),
   });
   return schema.validate(login);
