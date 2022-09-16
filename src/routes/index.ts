@@ -6,7 +6,7 @@ import creditRoutes from "./creditRoutes";
 import debitRoutes from "./debitRoutes";
 import adminRoutes from "./adminRoutes";
 import feedbackRoutes from "./feedbackRoutes";
-import notificationRoutes from "./notificationRoutes"
+import notificationRoutes from "./notificationRoutes";
 
 const router = Router();
 

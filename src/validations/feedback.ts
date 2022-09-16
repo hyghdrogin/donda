@@ -20,5 +20,3 @@ export const validateId = {
     })
   })
 };
-
-// export default { validateFeedback, validateId };
