@@ -132,16 +132,37 @@ export default class UserController {
    * @param {object} res - The reset errorResponse object
    * @returns {object} Success message
    */
+  static async uploadHeaderPicture(req: Request, res: Response) {
+    try {
+      const { _id } = req.user;
+      const user = await models.User.findByIdAndUpdate(
+        _id,
+        { header: req.file?.path },
+        { new: true }
+      ).select("-password");
+
+      return successResponse(res, 200, "Picture uploaded Successfully.", user);
+    } catch (error) {
+      handleError(error, req);
+      return errorResponse(res, 500, "Server error");
+    }
+  }
+
+  /**
+   * @param {object} req - The reset request object
+   * @param {object} res - The reset errorResponse object
+   * @returns {object} Success message
+   */
   static async resendOtp(req: Request, res: Response) {
     try {
-      const { email } = req.body;
-      const user: IUser | null = await models.User.findOne({ email });
+      // const { email } = req.body;
+      const user: IUser | null = await models.User.findOne(req.body.email);
       if (!user) { return errorResponse(res, 404, "Email does not exist."); }
       const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
-      await models.Otp.findOneAndUpdate(email, { token: otp, expired: false });
+      await models.Otp.findOneAndUpdate(req.body.email, { token: otp, expired: false });
       const subject = "Resend otp";
       const message = `hi, kindly verify your account with this token ${otp}`;
-      await sendEmail(email, subject, message);
+      await sendEmail(req.body.email, subject, message);
       return successResponse(
         res,
         201,

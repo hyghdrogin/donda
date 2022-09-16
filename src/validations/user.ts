@@ -9,6 +9,7 @@ export const validateSignup = (user: IUser) => {
     password: Joi.string().required().min(6).max(16),
     phone: Joi.string().required(),
     photo: Joi.string(),
+    header: Joi.string(),
   });
   return schema.validate(user);
 };
