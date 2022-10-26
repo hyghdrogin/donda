@@ -207,6 +207,7 @@ export default class UserController {
   static async getAllUsers(req: Request, res: Response) {
     try {
       const { status, role, name } = req.query;
+      let { page, limit }: any = req.query;
       const filter = {} as IFilter;
       status ? filter.verified = status as string : filter.verified = "true";
       role ? filter.role = role as string : filter.role = "user";
@@ -215,12 +216,33 @@ export default class UserController {
           $search: name as string
         };
       }
-      const users = await models.User.find(filter).select("-password");
+      // eslint-disable-next-line no-mixed-operators
+      if (page === undefined || null && limit === undefined || null) {
+        page = 1;
+        limit = 5;
+      }
+      const startIndex = (page - 1) * limit;
+      const endIndex = limit * 1;
+      const users = await models.User.find(filter)
+        .select("-password")
+        .limit(endIndex)
+        .skip(startIndex)
+        .exec();
+
+      const count = await models.User.countDocuments() - 2;
+      let totalPages = Math.ceil(count / limit) - 1;
+      if (totalPages === 0) totalPages = 1;
+      const total = users.length;
       return successResponse(
         res,
         200,
         "Account verified successfully kindly login.",
-        { total: users.length, users }
+        {
+          total,
+          totalPages,
+          currentPage: page,
+          users
+        }
       );
     } catch (error) {
       handleError(error, req);
