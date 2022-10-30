@@ -55,16 +55,23 @@ export default class UserController {
    */
   static async loginUser(req: Request, res: Response) {
     try {
-      const { email, password } = req.body;
-      const user: IUser | null = await models.User.findOne({ email });
-      if (!user) { return errorResponse(res, 404, "Email does not exist."); }
+      const { EmailPhone, password } = req.body;
+
+      const user = await models.User.findOne({
+        $or: [{
+          email: EmailPhone
+        }, {
+          phone: EmailPhone
+        }]
+      });
+      if (!user) return errorResponse(res, 404, "email or Phone number not found");
       if (!user.verified) {
         return errorResponse(res, 409, "Kindly verify your account before logging in.");
       }
-      if (user.active !== true) { return errorResponse(res, 403, "Account has been deactivated. Please contact admin."); }
       const validpass = await bcrypt.compare(password, user.password);
       if (!validpass) { return errorResponse(res, 404, "Password is not correct!."); }
-      const { _id, phone } = user;
+
+      const { _id, email, phone } = user;
       const token = await generateToken({ _id, email, phone });
       if (user.active !== true) {
         return errorResponse(res, 403, "User account temporarily on hold, contact admin");
