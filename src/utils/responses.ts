@@ -23,7 +23,7 @@ const handleError = (err: any, req: Request) => {
   console.log(`
       Error caught at ${req.path}, 
       Request body: ${JSON.stringify(req.body)},
-      Request User: ${JSON.stringify(req.user)},
+      Request User: ${JSON.stringify(req.details)},
       Request Params: ${JSON.stringify(req.params)}
       Request Query: ${JSON.stringify(req.query)}
       Error Message: ${JSON.stringify(err.message)}

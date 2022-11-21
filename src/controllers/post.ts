@@ -16,7 +16,7 @@ export default class PostController {
    */
   static async createPost(req: Request, res: Response) {
     try {
-      const { _id } = req.user;
+      const { _id } = req.details;
       const { post } = req.body;
       const pst = await models.Post.create({ post, user_id: _id });
       return successResponse(res, 200, "Post created.", pst);

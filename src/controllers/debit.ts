@@ -16,7 +16,7 @@ export default class AdminDebitController {
      */
   static async sendMoney(req: Request, res: Response) {
     try {
-      const { _id } = req.user;
+      const { _id } = req.details;
       const { account, amount } = req.body;
       if (Number.isNaN(Number(amount)) || Number(amount) <= 0) {
         return errorResponse(res, 422, "Invalid amount.");
@@ -68,7 +68,7 @@ export default class AdminDebitController {
      */
   static async requestWithdrawal(req: Request, res: Response) {
     try {
-      const { _id } = req.user;
+      const { _id } = req.details;
       const { amount, account } = req.body;
 
       const user = await models.User.findById({ _id });
@@ -107,7 +107,7 @@ export default class AdminDebitController {
      */
   static async getDebitTransactions(req: Request, res: Response) {
     try {
-      const transactions = await models.Debit.find({ user: req.user._id });
+      const transactions = await models.Debit.find({ user: req.details._id });
       return successResponse(res, 200, "Successfully retrieved all Debit Transactions.", transactions);
     } catch (error) {
       return errorResponse(res, 500, "Server error.");
