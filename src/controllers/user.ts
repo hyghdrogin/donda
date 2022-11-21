@@ -98,7 +98,7 @@ export default class UserController {
    */
   static async updateProfile(req: Request, res: Response) {
     try {
-      const { _id } = req.user;
+      const { _id } = req.details;
       const { firstName, lastName } = req.body;
       const user: IUser | null = await models.User.findByIdAndUpdate({ _id }, { firstName, lastName }, { new: true }).select("-password");
       return successResponse(
@@ -120,7 +120,7 @@ export default class UserController {
    */
   static async uploadProfilePicture(req: Request, res: Response) {
     try {
-      const { _id } = req.user;
+      const { _id } = req.details;
       const user = await models.User.findByIdAndUpdate(
         _id,
         { photo: req.file?.path },
@@ -141,7 +141,7 @@ export default class UserController {
    */
   static async uploadHeaderPicture(req: Request, res: Response) {
     try {
-      const { _id } = req.user;
+      const { _id } = req.details;
       const user = await models.User.findByIdAndUpdate(
         _id,
         { header: req.file?.path },

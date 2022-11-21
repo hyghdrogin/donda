@@ -39,7 +39,7 @@ export default class NotificationController {
    */
   static async getAllNotification(req: Request, res: Response) {
     try {
-      const { _id } = req.user;
+      const { _id } = req.details;
       const notification = await models.Notification.find({ owner: _id }).populate([
         { path: "owner", select: "_id firstName lastName email photo", },
       ]);
@@ -57,7 +57,7 @@ export default class NotificationController {
    */
   static async getNotificationById(req: Request, res: Response) {
     try {
-      const { _id } = req.user;
+      const { _id } = req.details;
       const { notificationId } = req.params;
 
       const notification = await models.Notification.findOne({ _id: notificationId, owner: _id }).populate([
@@ -81,7 +81,7 @@ export default class NotificationController {
    */
   static async deleteNotification(req: Request, res: Response) {
     try {
-      const { _id } = req.user;
+      const { _id } = req.details;
       const { notificationId } = req.params;
       const user = await models.User.findById(_id);
       if (!user) {

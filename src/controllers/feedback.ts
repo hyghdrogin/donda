@@ -16,7 +16,7 @@ export default class FeedbackController {
      */
   static async createfeedback(req: Request, res: Response) {
     try {
-      const { _id } = req.user;
+      const { _id } = req.details;
       const { feedback } = req.body;
       const newFeedback = await models.Feedback.create({ owner: _id, feedback });
       return successResponse(res, 201, "Feedback submitted.", newFeedback);

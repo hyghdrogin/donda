@@ -1,5 +1,6 @@
 export interface IUser {
   _id?: string
+  googleID?: string
   email: string
   password: string
   firstName?: string
@@ -16,7 +17,7 @@ export interface IUser {
   updatedAt?: Date
 }
 export interface CustomRequest {
-  user: IUser
+  details: IUser
   file: object
   params: object
   query: object

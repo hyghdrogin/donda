@@ -15,7 +15,7 @@ export default class CommentController {
       */
   static async createComment(req: Request, res: Response) {
     try {
-      const { _id } = req.user;
+      const { _id } = req.details;
       const { postId } = req.params;
       const { post } = req.body;
 

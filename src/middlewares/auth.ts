@@ -23,7 +23,7 @@ export default class Authentication {
 
             const user = await models.User.findById(decoded._id);
             if (!user) return errorResponse(res, 404, "User account not found");
-            req.user = user;
+            req.details = user;
             return next();
           }
         } else {
@@ -39,7 +39,7 @@ export default class Authentication {
 
   static async verifyAdmin(req: Request, res: Response, next: NextFunction) {
     try {
-      const { _id } = req.user;
+      const { _id } = req.details;
       const admin = await models.User.findOne({ _id, role: "admin" });
       if (!admin) return errorResponse(res, 401, "Unauthorized access.");
       return next();

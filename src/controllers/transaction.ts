@@ -19,7 +19,7 @@ export default class CreditController {
  */
   static async createTransaction(req: Request, res: Response) {
     try {
-      const { _id } = req.user;
+      const { _id } = req.details;
       const { amount } = req.body;
       const user = await models.User.findById(_id);
       if (!user) { return errorResponse(res, 404, "User not found"); }
