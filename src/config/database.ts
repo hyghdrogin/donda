@@ -13,5 +13,3 @@ const connect = async () => {
 };
 
 export default { connect };
-
-//    multer-storage-cloudinarycloudinary

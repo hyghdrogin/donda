@@ -64,7 +64,7 @@ export default class UserController {
           phone: EmailPhone
         }]
       });
-      if (!user) return errorResponse(res, 404, "email or Phone number not found");
+      if (!user) return errorResponse(res, 404, "email or Phone number not found.");
       if (!user.verified) {
         return errorResponse(res, 409, "Kindly verify your account before logging in.");
       }

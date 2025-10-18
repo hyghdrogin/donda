@@ -20,9 +20,13 @@ const sendEmail = async (email: string, subject: string, message: string) => {
     msg.to = email;
     msg.subject = subject;
     msg.text = message;
-    await sgMail.send(msg);
+    const a = await sgMail.send(msg);
+    console.log(a);
+
     console.log("message sent...");
-  } catch (err) {
+  } catch (err: any) {
+    console.log(err.response.body.errors);
+
     return err;
   }
 };
